@@ -123,11 +123,6 @@ const App = () => {
     };
   }, [isHorizontal, isVerticalEnabled]);
   
-  
-  
-  
-  
-  
 
   useEffect(() => {
     const onScroll = () => {
@@ -170,8 +165,12 @@ const App = () => {
     };
   }, [isHorizontal]);
   
-  
 
+
+
+  
+  
+  
   return (
     <BrowserRouter>
       <div className="layout">
