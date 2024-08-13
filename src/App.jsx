@@ -51,16 +51,17 @@ const App = () => {
     const onWheel = debounce((event) => {
       const teamSection = document.querySelector("#team");
       const currentScrollPosition = contentRef.current.scrollLeft;
-  
+    
       if (isHorizontal) {
         // Handle horizontal scroll
         event.preventDefault();
+        const scrollSpeed = 3; // Increase this value to make the horizontal scroll faster
         contentRef.current.scrollBy({
           top: 0,
-          left: -event.deltaY,
+          left: -event.deltaY * scrollSpeed, // Multiply the scroll delta by the speed factor
           behavior: "smooth",
         });
-  
+    
         // Disable vertical scrolling if reverse scrolling horizontally before reaching the Team section
         if (currentScrollPosition <= teamSection.offsetLeft - window.innerWidth / 2) {
           setIsVerticalEnabled(false);
@@ -71,7 +72,7 @@ const App = () => {
         // Handle vertical scroll
         event.preventDefault();
         const scrollTop = contentRef.current.scrollTop;
-  
+    
         if (scrollTop <= teamSection.offsetTop) {
           // If at the top of the Team section and scrolling up, switch back to horizontal scroll
           setIsHorizontal(true);
@@ -85,6 +86,7 @@ const App = () => {
         }
       }
     }, 100);
+    
   
     const currentContentRef = contentRef.current;
     if (currentContentRef) {
@@ -109,7 +111,7 @@ const App = () => {
       const fullWidth = contentRef.current.scrollWidth;
       
       // Apply scaling factor to slow down horizontal progress
-      const scalingFactor = 0.2; // Adjust this factor to slow down or speed up the progress
+      const scalingFactor = 2; // Adjust this factor to slow down or speed up the progress
       const scrolledHorizontal = ((scrollPosition / (fullWidth - windowWidth)) * 100) / scalingFactor;
   
       let verticalProgress = 50; // Start vertical progress at 50%
