@@ -33,7 +33,7 @@ const App = () => {
       if (!contentRef.current) return;
 
       const currentScrollPosition = contentRef.current.scrollLeft;
-      const teamSection = document.querySelector("#make_me_vertical");
+      const teamSection = document.querySelector("#team");
 
       if (teamSection) {
         const teamSectionOffset = teamSection.offsetLeft;
@@ -58,17 +58,17 @@ const App = () => {
       const scrollTop = contentRef.current.scrollTop;
       const scrollLeft = contentRef.current.scrollLeft;
 
-      // Get the right half of the team section
+      // Get the right 70% of the team section
       const teamSectionRect = teamSection.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
 
-      // Right half of the team section
-      const rightHalfStart = teamSectionRect.left + teamSectionRect.width / 2;
-      const rightHalfEnd = teamSectionRect.right;
+      // Right 70% of the team section
+      const right70PercentStart = teamSectionRect.left + teamSectionRect.width * 0.3; // 30% from left
+      const right70PercentEnd = teamSectionRect.right;
 
-      // Log mouse wheel activity specifically for the right half
-      if (scrollLeft + viewportWidth / 2 >= rightHalfStart && scrollLeft + viewportWidth / 2 <= rightHalfEnd) {
-        console.log("Mouse wheel activity detected on the right half of the Team section.");
+      // Log mouse wheel activity specifically for the right 70% of the team section
+      if (scrollLeft + viewportWidth / 2 >= right70PercentStart && scrollLeft + viewportWidth / 2 <= right70PercentEnd) {
+        console.log("Mouse wheel activity detected on the right 70% of the Team section.");
       }
 
       if (isHorizontal) {
