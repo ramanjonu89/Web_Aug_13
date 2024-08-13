@@ -24,6 +24,8 @@ const App = () => {
   const [isPortfolioVisible, setIsPortfolioVisible] = useState(false);
   const [isBlogVisible, setIsBlogVisible] = useState(false);
 
+
+  // mouse event 
   useEffect(() => {
     const onScroll = debounce(() => {
       if (!contentRef.current) return;
@@ -35,7 +37,7 @@ const App = () => {
         const teamSectionOffset = teamSection.offsetLeft;
   
         // Enable vertical scrolling when any part of the Team section is visible
-        if (currentScrollPosition >= teamSectionOffset - window.innerWidth / 5) {
+        if (currentScrollPosition >= teamSectionOffset - window.innerWidth / 4) {
           setIsHorizontal(false);
           setIsVerticalEnabled(true);
           console.log("Horizontal scroll ended. Vertical scroll started.");
