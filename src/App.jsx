@@ -67,9 +67,9 @@ const App = () => {
       const right70PercentEnd = teamSectionRect.right;
 
       // Log mouse wheel activity specifically for the right 70% of the team section
-      if (scrollLeft + viewportWidth / 2 >= right70PercentStart && scrollLeft + viewportWidth / 2 <= right70PercentEnd) {
-        console.log("Mouse wheel activity detected on the right 70% of the Team section.");
-      }
+      // if (scrollLeft + viewportWidth / 2 >= right70PercentStart && scrollLeft + viewportWidth / 2 <= right70PercentEnd) {
+      //   console.log("Mouse wheel activity detected on the right 70% of the Team section.");
+      // }
 
       if (isHorizontal) {
         // Handle horizontal scroll
@@ -81,21 +81,22 @@ const App = () => {
           behavior: "smooth",
         });
 
-        if (scrollLeft <= teamSection.offsetLeft - window.innerWidth / 4) {
-          setIsVerticalEnabled(false);
-          setIsHorizontal(true);
-          console.log("Reverse horizontal scroll detected. Vertical scroll disabled.");
-        }
-      } else {
+        // if (scrollLeft <= teamSection.offsetLeft - window.innerWidth / 4) {
+        //   setIsVerticalEnabled(false);
+        //   setIsHorizontal(true);
+        //   console.log("Reverse horizontal scroll detected. Vertical scroll disabled.");
+        // }
+      } 
+      else {
         // Handle vertical scroll
         event.preventDefault();
 
         // Check if scrolling down
-        if (scrollTop > prevScrollTop) {
-          if (scrollTop > teamSection.offsetTop && scrollTop <= teamSection.offsetTop + teamSection.offsetHeight) {
-            console.log("Mouse wheel scrolling down within the Team section.");
-          }
-        }
+        // if (scrollTop > prevScrollTop) {
+        //   if (scrollTop > teamSection.offsetTop && scrollTop <= teamSection.offsetTop + teamSection.offsetHeight) {
+        //     console.log("Mouse wheel scrolling down within the Team section.");
+        //   }
+        // }
 
         if (scrollTop <= teamSection.offsetTop) {
           setIsHorizontal(true);
