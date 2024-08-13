@@ -221,6 +221,11 @@ const ContactPage = () => {
               <SocialButtons />
             </div>
           </div>
+          <div className="footer">
+            <div className="footer-bottom">
+              <p>&copy; 2024 WEBDADDY. All rights reserved.</p>
+            </div>
+          </div>
         </>
       )}
     </div>

@@ -1,8 +1,9 @@
 .servicePage-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 30px 100px;
+  align-items: flex-end;
+  margin-left: 5%;
+  padding: 40px 65px;   /* changed added horizontal padding */
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
@@ -10,7 +11,9 @@
   overflow: auto;
   font-family: "Montserrat", sans-serif;
   scroll-behavior: smooth;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  
 }
 
 .main-wrapper {

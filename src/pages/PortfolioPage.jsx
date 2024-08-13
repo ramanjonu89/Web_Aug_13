@@ -201,164 +201,29 @@ const PortfolioPage = () => {
 
 export default PortfolioPage;
 
-// import React from "react";
-// import portfolioimgaes1 from "../assets/Rectangle 1071 portfolioimgaes1.svg";
-// import portfolioimgaes2 from "../assets/Rectangle 1070portfolioimgaes2.svg";
-// import portfolioimgaes3 from "../assets/Rectangle 1069portfolioimgaes3.svg";
-// import portfolioimgaes4 from "../assets/Rectangle 1068portfolioimgaes4.svg";
-// import portfolioimgaes5 from "../assets/Rectangle 1067portfolioimgaes5.svg";
-// import portfolioimgaes6 from "../assets/Rectangle 1076portfolioimgaes6.svg";
-// import arrowimage from "../assets/Arrow.svg";
-// import "./PortfolioPageCSS.css";
+// /* Webkit scrollbar styles */
+// .portfoliopage-container::-webkit-scrollbar {
+//   width: 8px; /* Set the width of the scrollbar */
+// }
 
-// const PortfolioPage = () => {
-//   return (
-//     <div className="portfoliopage-container" id="portfolio">
-//       <div>
-//         <div className="portfoliopage-heading">
-//           <h1>LATEST</h1>
-//           <h1 className="stroke"> PROJECTS</h1>
-//         </div>
+// .portfoliopage-container::-webkit-scrollbar-thumb {
+//   background-color: #888; /* Thumb color */
+//   border-radius: 50px; /* Thumb border radius */
+//   height: 8px; /* Thumb height */
+// }
 
-//         <div className="lp-container-one">
-//           <h1 className="lp-number">01/</h1>
-//           <div className="lp-container-content">
-//             <p>Saas Landing Page</p>
-//             <h1>Taskio - Task Management</h1>
-//           </div>
-//           <div className="lp-container-image">
-//             <img
-//               src={portfolioimgaes6}
-//               alt="image"
-//               className="lp-image-style"
-//             />
-//           </div>
-//         </div>
+// .portfoliopage-container::-webkit-scrollbar-track {
+//   background-color: rgba(0, 0, 0, 0.1); /* Track color */
+//   border-radius: 50px; /* Track border radius */
+// }
 
-//         <div className="lp-container-one">
-//           <h1 className="lp-number">02/</h1>
-//           <div className="lp-container-content">
-//             <p>Saas Landing Page</p>
-//             <h1>Taskio - Task Management</h1>
-//           </div>
-//           <div className="lp-container-image">
-//             <img
-//               src={portfolioimgaes6}
-//               alt="image"
-//               className="lp-image-style"
-//             />
-//           </div>
-//         </div>
+// /* Firefox scrollbar styles */
+// .portfoliopage-container {
+//   scrollbar-width: thin; /* Makes the scrollbar thin */
+//   scrollbar-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0); /* Sets the color for thumb and track */
+// }
 
-//         <div className="lp-container-one">
-//           <h1 className="lp-number">03/</h1>
-//           <div className="lp-container-content">
-//             <p>Saas Landing Page</p>
-//             <h1>Taskio - Task Management</h1>
-//           </div>
-//           <div className="lp-container-image">
-//             <img
-//               src={portfolioimgaes6}
-//               alt="image"
-//               className="lp-image-style"
-//             />
-//           </div>
-//         </div>
-
-//         <div className="lp-container-one">
-//           <h1 className="lp-number">04</h1>
-//           <div className="lp-container-content">
-//             <p>Saas Landing Page</p>
-//             <h1>Taskio - Task Management</h1>
-//           </div>
-//           <div className="lp-container-image">
-//             <img
-//               src={portfolioimgaes6}
-//               alt="image"
-//               className="lp-image-style"
-//             />
-//           </div>
-//         </div>
-
-//         <div className="lp-container-one">
-//           <h1 className="lp-number">05/</h1>
-//           <div className="lp-container-content">
-//             <p>Saas Landing Page</p>
-//             <h1>Taskio - Task Management</h1>
-//           </div>
-//           <div className="lp-container-image">
-//             <img
-//               src={portfolioimgaes6}
-//               alt="image"
-//               className="lp-image-style"
-//             />
-//           </div>
-//         </div>
-//       </div>
-
-//       <div>
-//         <div className="portfoliopage-heading">
-//           <h1>PORT</h1>
-//           <h1 className="stroke">FOLIO</h1>
-//         </div>
-
-//         <div className="portfoliopage-project-container portfoliopage-project-container-one">
-//           <div className="portfoliopage-project-image-container">
-//             <img src={portfolioimgaes1} alt="projectimage" />
-//           </div>
-//           <div className="portfoliopage-project-text-container">
-//             <h4>Taskio - Task Management</h4>
-//             <p>Saas Landing Page</p>
-//             <img src={arrowimage} alt="arrow" />
-//           </div>
-//         </div>
-
-//         <div className="portfoliopage-project-container portfoliopage-project-container-two">
-//           <div className="portfoliopage-project-text-container">
-//             <h4>Taskio - Task Management</h4>
-//             <p>Saas Landing Page</p>
-//             <img src={arrowimage} alt="arrow" className="arrow-reverse" />
-//           </div>
-//           <div className="portfoliopage-project-image-container">
-//             <img src={portfolioimgaes2} alt="projectimage" />
-//           </div>
-//         </div>
-
-//         <div className="portfoliopage-project-container portfoliopage-project-container-one">
-//           <div className="portfoliopage-project-image-container">
-//             <img src={portfolioimgaes3} alt="projectimage" />
-//           </div>
-//           <div className="portfoliopage-project-text-container">
-//             <h4>Taskio - Task Management</h4>
-//             <p>Saas Landing Page</p>
-//             <img src={arrowimage} alt="arrow" />
-//           </div>
-//         </div>
-
-//         <div className="portfoliopage-project-container portfoliopage-project-container-two">
-//           <div className="portfoliopage-project-text-container">
-//             <h4>Taskio - Task Management</h4>
-//             <p>Saas Landing Page</p>
-//             <img src={arrowimage} alt="arrow" className="arrow-reverse" />
-//           </div>
-//           <div className="portfoliopage-project-image-container">
-//             <img src={portfolioimgaes4} alt="projectimage" />
-//           </div>
-//         </div>
-
-//         <div className="portfoliopage-project-container portfoliopage-project-container-one">
-//           <div className="portfoliopage-project-image-container">
-//             <img src={portfolioimgaes5} alt="projectimage" />
-//           </div>
-//           <div className="portfoliopage-project-text-container">
-//             <h4>Taskio - Task Management</h4>
-//             <p>Saas Landing Page</p>
-//             <img src={arrowimage} alt="arrow" />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PortfolioPage;
+// .portfoliopage-container::-moz-scrollbar-thumb {
+//   border-radius: 10px; /* Thumb border radius */
+//   height: 8px; /* Thumb height */
+// }

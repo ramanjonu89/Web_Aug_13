@@ -3,10 +3,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 115w;
+  width: 130vw;
   height: 100vh;
-  margin-left: -15%;
-  clip-path: polygon(31% 0%, 100% 0%, 100% 100%, 0% 100%);
+  /* margin-left: 4%; */
+  clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
   background-color: whitesmoke;
   color: #4e4e4e;
   padding: 50px 20px;
@@ -225,17 +225,17 @@
 .text {
   animation: fadeInOut 5s infinite;
   opacity: 1;
-  margin-top: 10%;
   font-size: 40px;
-  margin-top: 11%;
+  margin-top: 10%;
   font-weight: bolder;
-  width: 10%;
+  width: 9%;
 }
 
 .text img {
   width: 20%;
   height: 10%;
   margin-left: 40%;
+  margin-top: 1px;
 }
 
 .highlight-d {
@@ -249,7 +249,7 @@
   width: 30%;
   height: 80%;
   position: relative;
-  top: 20px; /* Add this line */
+  top: 15px; /* Add this line */
 }
 
 @keyframes fadeInOut {

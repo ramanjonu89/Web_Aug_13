@@ -28,17 +28,23 @@ const App = () => {
   // mouse event 
   useEffect(() => {
     let prevScrollTop = 0; // Track previous scroll position for wheel event
-
+  
     const onScroll = debounce(() => {
       if (!contentRef.current) return;
-
+  
       const currentScrollPosition = contentRef.current.scrollLeft;
       const teamSection = document.querySelector("#team");
-
+  
       if (teamSection) {
         const teamSectionOffset = teamSection.offsetLeft;
-
-        if (currentScrollPosition >= teamSectionOffset - window.innerWidth / 4.5) {
+        const teamSectionWidth = teamSection.offsetWidth;
+        const viewportWidth = window.innerWidth;
+  
+        // Adjust the trigger offset to be later, e.g., when 80% of the Team section is in view
+        const triggerOffset = teamSectionOffset + teamSectionWidth * 1.5;
+  
+        // Trigger vertical scrolling when the right edge of the Team section is visible
+        if (currentScrollPosition >= triggerOffset - viewportWidth) {
           setIsHorizontal(false);
           setIsVerticalEnabled(true);
           console.log("Horizontal scroll ended. Vertical scroll started.");
@@ -46,78 +52,63 @@ const App = () => {
           setIsHorizontal(true);
           setIsVerticalEnabled(false);
         }
-
+  
         setScrollPosition(currentScrollPosition);
       }
     }, 100);
-
+  
     const onWheel = debounce((event) => {
       if (!contentRef.current) return;
-
+  
       const teamSection = document.querySelector("#team");
       const scrollTop = contentRef.current.scrollTop;
       const scrollLeft = contentRef.current.scrollLeft;
-
-      // Get the right 70% of the team section
-      const teamSectionRect = teamSection.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-
-      // Right 70% of the team section
-      const right70PercentStart = teamSectionRect.left + teamSectionRect.width * 0.3; // 30% from left
-      const right70PercentEnd = teamSectionRect.right;
-
-      // Log mouse wheel activity specifically for the right 70% of the team section
-      // if (scrollLeft + viewportWidth / 2 >= right70PercentStart && scrollLeft + viewportWidth / 2 <= right70PercentEnd) {
-      //   console.log("Mouse wheel activity detected on the right 70% of the Team section.");
-      // }
-
-      if (isHorizontal) {
-        // Handle horizontal scroll
-        event.preventDefault();
-        const scrollSpeed = 3;
-        contentRef.current.scrollBy({
-          top: 0,
-          left: -event.deltaY * scrollSpeed,
-          behavior: "smooth",
-        });
-
-        // if (scrollLeft <= teamSection.offsetLeft - window.innerWidth / 4) {
-        //   setIsVerticalEnabled(false);
-        //   setIsHorizontal(true);
-        //   console.log("Reverse horizontal scroll detected. Vertical scroll disabled.");
-        // }
-      } 
-      else {
-        // Handle vertical scroll
-        event.preventDefault();
-
-        // Check if scrolling down
-        // if (scrollTop > prevScrollTop) {
-        //   if (scrollTop > teamSection.offsetTop && scrollTop <= teamSection.offsetTop + teamSection.offsetHeight) {
-        //     console.log("Mouse wheel scrolling down within the Team section.");
-        //   }
-        // }
-
-        if (scrollTop <= teamSection.offsetTop) {
-          setIsHorizontal(true);
-        } else {
+  
+      if (teamSection) {
+        const teamSectionRect = teamSection.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+  
+        // Check if the Team section is partially visible in the viewport
+        const isTeamSectionVisible =
+          teamSectionRect.top < viewportHeight &&
+          teamSectionRect.bottom > 0;
+  
+        if (isHorizontal) {
+          // Handle horizontal scroll
+          event.preventDefault();
+          const scrollSpeed = 3;
           contentRef.current.scrollBy({
-            top: event.deltaY,
-            left: 0,
+            top: 0,
+            left: event.deltaY * scrollSpeed,
             behavior: "smooth",
           });
+        } else if (isVerticalEnabled) {
+          // Handle vertical scroll
+          event.preventDefault();
+  
+          if (scrollTop <= teamSection.offsetTop) {
+            setIsHorizontal(true);
+          } else {
+            if (isTeamSectionVisible) {
+              contentRef.current.scrollBy({
+                top: event.deltaY,
+                left: 0,
+                behavior: "smooth",
+              });
+            }
+          }
+  
+          prevScrollTop = scrollTop; // Update previous scroll position
         }
-
-        prevScrollTop = scrollTop; // Update previous scroll position
       }
     }, 100);
-
+  
     const currentContentRef = contentRef.current;
     if (currentContentRef) {
       currentContentRef.addEventListener("scroll", onScroll);
       currentContentRef.addEventListener("wheel", onWheel);
     }
-
+  
     return () => {
       if (currentContentRef) {
         currentContentRef.removeEventListener("scroll", onScroll);
@@ -125,6 +116,9 @@ const App = () => {
       }
     };
   }, [isHorizontal, isVerticalEnabled]);
+  
+  
+  
   
   
   
@@ -169,12 +163,6 @@ const App = () => {
       contentRef.current.removeEventListener("scroll", onScroll);
     };
   }, [isHorizontal]);
-  
-  
-
-  
-  
-  
   
   
 

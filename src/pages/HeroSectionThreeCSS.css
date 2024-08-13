@@ -19,7 +19,7 @@
   width: 250vw;
   height: 100vh;
   margin-left: 15%;
-  clip-path: polygon(17% 0%, 100% 0%, 90% 100%, 0% 100%);
+  clip-path: polygon(15% 0%, 100% 0%, 90% 100%, 0% 100%);
   font-family: "Montserrat", sans-serif;
   scroll-behavior: smooth;
 }

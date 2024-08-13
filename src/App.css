@@ -11,6 +11,10 @@ body {
   font-family: "MerichTitle1", sans-serif;
   overflow-x: hidden; /* Disable horizontal overflow */
   scroll-behavior: smooth;
+  -moz-user-select: none; /* firefox */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE */
+  user-select: none; /* Standard syntax */
 }
 
 body {
@@ -27,8 +31,6 @@ body {
 .sidebar {
   width: 5%;
   background-color: #333;
-  /* padding: 10px; */
-  /* padding-left: 30px; */
   height: 100vh;
   position: fixed;
   top: 0;
@@ -36,7 +38,6 @@ body {
   z-index: 1001;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: flex-start;
 }
 
@@ -127,31 +128,28 @@ body {
   margin-left: 5px; /* Remove margin on hover */
 }
 
-/* Main Content Styles */
-.main-content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-left: 5%;
-  padding: 0px;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  /* height: 100vh; */
-}
-
 .content {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
   width: 100vw;
-  /* height: 100vh; */
+  height: 100vh;
   scroll-behavior: smooth;
 }
 
 .content-item {
   flex: 0 0 auto;
-  height: 100vh;
+  width: 100vw; /* Ensure each section is at least 100vw wide */
+  /* height: 100%; */
+}
+
+.hero-section-three-item {
+  width: 200vw;
+}
+
+.hero-section-four-item {
+  width: 100vw;
 }
 
 .hero-section-three-item {
@@ -231,7 +229,7 @@ body {
   }
 }
 
-
+/* Styles for horizontal and vertical scrolling */
 .horizontal .content {
   display: flex;
   overflow-x: auto;
@@ -241,19 +239,15 @@ body {
 }
 
 .vertical {
-  /* overflow-x: hidden !important; */
-  overflow-y: auto !important;
-height: 100vh;
-  scroll-snap-type: y mandatory;
-
-}
-.services-visible{
   overflow-x: hidden !important;
   overflow-y: auto !important;
+  scroll-snap-type: y mandatory;
 }
 
-.make_me_vertical{
-  width: 100%;
-  height: 100%;
+.after_team{
+  margin-left: 45%;
 }
-.after_team { width: 100%; height: 100%; }
+
+
+
+
