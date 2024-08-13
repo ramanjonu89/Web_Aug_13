@@ -23,9 +23,9 @@ const App = () => {
   const [isContactVisible, setIsContactVisible] = useState(false);
   const [isPortfolioVisible, setIsPortfolioVisible] = useState(false);
   const [isBlogVisible, setIsBlogVisible] = useState(false);
-  const [isTeamHighlighted, setIsTeamHighlighted] = useState(false); // State to track border visibility
 
-  // Mouse event
+
+  // mouse event 
   useEffect(() => {
     let prevScrollTop = 0; // Track previous scroll position for wheel event
 
@@ -69,8 +69,6 @@ const App = () => {
       // Log mouse wheel activity specifically for the right 70% of the team section
       if (scrollLeft + viewportWidth / 2 >= right70PercentStart && scrollLeft + viewportWidth / 2 <= right70PercentEnd) {
         console.log("Mouse wheel activity detected on the right 70% of the Team section.");
-        setIsTeamHighlighted(true); // Highlight team section
-        setTimeout(() => setIsTeamHighlighted(false), 2000); // Remove highlight after 2 seconds
       }
 
       if (isHorizontal) {
@@ -126,6 +124,9 @@ const App = () => {
       }
     };
   }, [isHorizontal, isVerticalEnabled]);
+  
+  
+  
 
   useEffect(() => {
     const onScroll = () => {
@@ -167,17 +168,25 @@ const App = () => {
       contentRef.current.removeEventListener("scroll", onScroll);
     };
   }, [isHorizontal]);
+  
+  
+
+  
+  
+  
+  
+  
 
   return (
     <BrowserRouter>
       <div className="layout">
         <SideBar />
         <div
-          className={`content ${isHorizontal ? "horizontal" : "vertical"} ${
-            isVerticalEnabled ? "vertical-enabled" : ""
-          } ${isServicesVisible || isContactVisible || isBlogVisible || isPortfolioVisible? "services-visible" : ""}`}
-          ref={contentRef}
-        >
+        className={`content ${isHorizontal ? "horizontal" : "vertical"} ${
+          isVerticalEnabled ? "vertical-enabled" : ""
+        } ${isServicesVisible || isContactVisible || isBlogVisible || isPortfolioVisible? "services-visible" : ""}`}
+        ref={contentRef}
+      >
           <div id="home" className="content-item">
             <HomePage />
           </div>
@@ -194,22 +203,23 @@ const App = () => {
             <AboutPage />
           </div>
           <div className="make_me_vertical" id="make_me_vertical">
-            <div id="team" className={`content-item ${isTeamHighlighted ? "highlighted" : ""}`}>
+            <div id="team" className="content-item">
               <TeamPage />
             </div>
             <div className="after_team">
-              <div id="services" className="content-item">
-                <ServicesPage />
-              </div>
-              <div id="portfolio" className="content-item">
-                <PortfolioPage />
-              </div>
-              <div id="blog" className="content-item">
-                <BlogPage />
-              </div>
-              <div id="contact" className="content-item">
-                <ContactPage />
-              </div>
+
+            <div id="services" className="content-item">
+              <ServicesPage />
+            </div>
+            <div id="portfolio" className="content-item">
+              <PortfolioPage />
+            </div>
+            <div id="blog" className="content-item">
+              <BlogPage />
+            </div>
+            <div id="contact" className="content-item">
+              <ContactPage />
+            </div>
             </div>
           </div>
         </div>
