@@ -1,0 +1,217 @@
+.servicePage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 100px;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: #2c2b2b;
+  overflow: auto;
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+  overflow-y: hidden;
+}
+
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  gap: 10%; /* Added gap property to set space between child elements */
+}
+
+.servicespage-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  letter-spacing: -0.05em;
+  line-height: 0.5;
+  color: #e2dcc8;
+}
+
+.servicePage-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  padding-top: 5%;
+}
+
+.servicePage-content {
+  width: 160%;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.servicePage-content:hover {
+  transform: translateY(-5px);
+  color: #e2dcc8;
+}
+
+.servicePage-content h1 {
+  font-size: 2em;
+  margin: 0;
+  color: transparent;
+  -webkit-text-stroke: 1px #e2dcc8;
+}
+
+.servicePage-content h1:hover {
+  font-size: 2em;
+  margin: 0;
+  color: #e2dcc8;
+}
+
+.servicePage-content p {
+  font-size: 1.2em;
+  color: #e2dcc8;
+  margin-left: 10px;
+  flex: 1;
+}
+
+/* Services page side content */
+.servicespage-sidecontent {
+  display: flex;
+  flex-direction: column;
+  background-color: #4e4e4e;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #e2dcc8;
+  margin-top: -5%;
+  padding-top: 1%;
+  margin-right: -40px;
+  height: 100vh; /* Ensure the side content takes full height */
+  overflow-y: auto; /* Enable internal scrolling */
+}
+
+/* Scrollbar styling for WebKit browsers */
+.servicespage-sidecontent::-webkit-scrollbar {
+  width: 12px; /* Set the width of the scrollbar */
+}
+
+.servicespage-sidecontent::-webkit-scrollbar-track {
+  background: transparent; /* Make the scrollbar track transparent */
+}
+
+.servicespage-sidecontent::-webkit-scrollbar-thumb {
+  background-color: #4e4e4e; /* Set the color of the moving bar */
+  border-radius: 10px; /* Optional: Rounded corners for the thumb */
+  border: 3px solid transparent; /* Space around the thumb */
+  background-clip: content-box; /* Show the border as a gap */
+}
+
+/* Scrollbar styling for Firefox */
+.servicespage-sidecontent {
+  scrollbar-width: thin;
+  scrollbar-color: #4e4e4e transparent; /* Thumb color and track color */
+}
+
+.sidecontent-heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  letter-spacing: -0.05em;
+  line-height: 0.5;
+}
+
+.sidecontent-heading h1 {
+  font-size: 80px;
+  margin: 2%;
+  color: transparent;
+  -webkit-text-stroke: 1px #e2dcc8;
+}
+
+.sidecontent-heading-content {
+  margin: 4%;
+  margin-top: 1%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.sidecontent-heading-content1 {
+  margin: 0%;
+  margin-top: 1%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.sidecontent-accordens {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.sidecontent-accordens-heading h1 {
+  font-size: 1.5em;
+  margin: 0;
+  color: #e2dcc8;
+}
+
+.sidecontent-accordens-heading h3 {
+  font-size: 1.2em;
+  margin: 0;
+  color: #e2dcc8;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+}
+
+.accordion-title {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px 0;
+  margin-left: 30px;
+  width: 90%;
+}
+
+.accordion-content {
+  padding: 20px 0;
+  padding-left: 30px;
+  color: #e2dcc8;
+}
+
+.accordion-title h1 {
+  font-size: 5.5em;
+  color: #e2dcc8;
+  letter-spacing: -0.05em;
+  line-height: 0.5;
+  color: transparent;
+  -webkit-text-stroke: 1px #e2dcc8;
+}
+.accordion-title h1:hover {
+  font-size: 5.5em;
+  color: #e2dcc8;
+  letter-spacing: -0.05em;
+  line-height: 0.5;
+  color: #e2dcc8;
+}
+
+.accordion-title h3 {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.accordion-title h5 {
+  margin: 1%;
+  color: #e2dcc8;
+  border: 1px solid;
+  padding: 5px;
+  padding-top: 10px;
+  padding-bottom: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 50px;
+}

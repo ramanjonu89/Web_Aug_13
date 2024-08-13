@@ -1,0 +1,228 @@
+.hero-section-two {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 150vw; /* Adjust width as needed */
+  height: 100vh;
+  margin-left: -5vw; /* Adjust margin as needed */
+  clip-path: polygon(20% 0%, 100% 0%, 75% 100%, 0% 100%);
+  background-color: #2c2b2b;
+  color: #e2dcc8;
+  padding: 20px;
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Animation for background lines */
+.linesintwo {
+  position: absolute;
+  top: 1;
+  left: 0;
+  right: 0;
+  margin: 140px;
+  height: 300vh; /* Full height of the hero-section-two */
+  width: 90vw;
+  pointer-events: none; /* Ensure these elements don't interfere with scroll */
+  transform: rotate(-36deg);
+}
+
+.lines {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 30%;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 15vh; /* Adjust the height of the line */
+    width: 100%;
+    top: -50%; /* Start position above the container */
+    left: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      #ffffff 75%,
+      #ffffff 100%
+    );
+    animation: drop 2s 0s infinite; /* Adjust animation duration and delay */
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+  }
+
+  &:nth-child(1) {
+    margin-left: -20%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(2) {
+    margin-left: 0%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1.2s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(3) {
+    margin-left: 20%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1.4s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(4) {
+    margin-left: 40%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1.6s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(5) {
+    margin-left: 60%; /* Adjust horizontal position */
+    margin-top: -10%;
+    &::after {
+      animation-delay: 1.8s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(6) {
+    margin-left: 80%; /* Adjust horizontal position */
+    /* margin-top: -20%; */
+    &::after {
+      animation-delay: 2s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(7) {
+    margin-left: 100%; /* Adjust horizontal position */
+    /* margin-top: -40%; */
+    &::after {
+      animation-delay: 2.2s; /* Delay for animation start */
+    }
+  }
+}
+
+@keyframes drop {
+  0% {
+    top: -50%; /* Start position above the container */
+  }
+  100% {
+    top: 110%; /* End position below the container */
+  }
+}
+
+/* Your existing styles for text and image in hero-section-two */
+.hero-section-two-text {
+  flex: 1;
+  align-items: flex-start;
+  margin-left: 20%;
+  margin-right: 5%;
+}
+
+.hero-section-two h1 {
+  margin: 20px;
+  font-size: 96px;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.hero-section-two p {
+  margin: 20px;
+  font-size: 18px;
+  padding: 10px;
+  padding-right: 30%;
+  line-height: 1.5;
+}
+
+.font-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px #e2dcc8;
+}
+
+.hero-video-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start; /* Align the video to the right */
+  margin-right: 15%;
+}
+
+#hero-video-bg {
+  width: 100%;
+  height: auto;
+  max-width: 500px; /* Adjust the max-width as needed */
+  border-radius: 10px; /* Optional: add some border radius for styling */
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* Initial hidden state */
+.hero-section-two h1 {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 3s ease-in;
+}
+.hero-section-two p {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.6s ease-out;
+}
+
+.hero-section-two h1:first-child {
+  transform: translateY(-100%);
+}
+
+.hero-section-two p {
+  transform: translateY(-100%);
+}
+
+/* Visible state */
+.hero-section-two h1.visible,
+.hero-section-two p.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hero-section-two h1:first-child.visible {
+  transform: translateY(0);
+}
+
+.hero-section-two p.visible {
+  transform: translateY(0);
+}
+
+/* Initial hidden state for video */
+#hero-video-bg {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 5s ease-out;
+}
+
+/* Keyframes for the bouncing effect */
+@keyframes bounceInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(30px);
+  }
+  80% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Visible state with bounce animation */
+#hero-video-bg.visible {
+  opacity: 1;
+  animation: bounceInLeft 5s forwards;
+}

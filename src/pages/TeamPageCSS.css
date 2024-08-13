@@ -1,0 +1,109 @@
+.Teampage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #282828;
+  color: #e2dcc8;
+  padding: 20px;
+  text-align: center;
+  margin-top: 0;
+  width: 100vw;
+  height: 100vh;
+  /* overflow-y: hidden; */
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+}
+
+.Teampage-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Add spacing between the h1 tags */
+  font-size: 32px;
+}
+
+.Teampage-container h1 {
+  color: #e2dcc8;
+  margin: 5px 0;
+  font-size: 2.5em;
+}
+
+.Teampage-container h1.stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px #e2dcc8;
+}
+
+.Teampage-container p {
+  color: #e2dcc8;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.2em;
+  max-width: 800px;
+}
+
+.Team-members-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1000px;
+  margin: 0;
+}
+
+.Team-members-container {
+  display: flex;
+  flex-direction: row-reverse; /* Place image on the right */
+  align-items: center;
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 40%;
+  min-width: 250px;
+  max-width: 400px; /* Ensure a maximum width for better card appearance */
+}
+
+.team-members-image {
+  margin-left: 40px; /* Add spacing between image and details */
+}
+
+.team-members-image img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.team-members-deatils-container {
+  text-align: center; /* Align text to the center */
+}
+
+.team-members-deatils-container h1 {
+  margin: 0 0 10px;
+  font-size: 1.8em;
+  color: #e2dcc8;
+}
+
+.team-members-deatils-container p {
+  margin: 0;
+  font-size: 1.2em;
+  color: #e2dcc8;
+}
+
+@media (max-width: 768px) {
+  .Team-members-container {
+    width: 45%;
+    flex-direction: column;
+    text-align: center; /* Center text on smaller screens */
+  }
+
+  .team-members-image {
+    margin: 0 0 10px; /* Adjust margin for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .Team-members-container {
+    width: 90%;
+  }
+}

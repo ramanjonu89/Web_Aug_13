@@ -1,0 +1,222 @@
+/* Default state for animate-on-scroll elements */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(-50px) scale(0.95);
+  transition: all 4s ease-in-out;
+}
+
+/* Animated state */
+.animate-on-scroll.animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.Hero-section-three {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 250vw;
+  height: 100vh;
+  margin-left: 15%;
+  clip-path: polygon(17% 0%, 100% 0%, 90% 100%, 0% 100%);
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+}
+.Hero-section-three {
+  position: relative;
+  justify-content: space-between; /* Change from space-around to space-between */
+  align-items: center;
+  background-color: #282828;
+  color: #e2dcc8;
+  padding: 40px;
+  width: 220vw; /* Adjusted width */
+}
+
+/* Animation for background lines */
+.linesthree {
+  position: absolute;
+  top: 1;
+  left: 0;
+  right: 0;
+  margin: 140px;
+  margin-left: 5%;
+  height: 300vh; /* Full height of the hero-section-two */
+  width: 90vw;
+  pointer-events: none; /* Ensure these elements don't interfere with scroll */
+  transform: rotate(36deg);
+}
+
+.line2 {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 55%;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 15vh; /* Adjust the height of the line */
+    width: 100%;
+    top: -50%; /* Start position above the container */
+    left: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      #ffffff 75%,
+      #ffffff 100%
+    );
+    animation: drop 2s 0s infinite; /* Adjust animation duration and delay */
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+  }
+
+  &:nth-child(1) {
+    margin-left: -20%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(2) {
+    margin-left: 0%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1.2s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(3) {
+    margin-left: 20%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1.4s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(4) {
+    margin-left: 40%; /* Adjust horizontal position */
+    &::after {
+      animation-delay: 1.6s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(5) {
+    margin-left: 60%; /* Adjust horizontal position */
+    margin-top: -10%;
+    &::after {
+      animation-delay: 1.8s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(6) {
+    margin-left: 80%; /* Adjust horizontal position */
+    margin-top: -20%;
+    &::after {
+      animation-delay: 2s; /* Delay for animation start */
+    }
+  }
+
+  &:nth-child(7) {
+    margin-left: 100%; /* Adjust horizontal position */
+    margin-top: -40%;
+    &::after {
+      animation-delay: 2.2s; /* Delay for animation start */
+    }
+  }
+}
+
+@keyframes drop {
+  0% {
+    top: -50%; /* Start position above the container */
+  }
+  100% {
+    top: 110%; /* End position below the container */
+  }
+}
+
+.Hero-section-three-text-two {
+  flex: 1;
+  /* margin: 75px; */
+  /* margin-left: 60px; */
+}
+
+.Hero-section-three-text-one {
+  flex: 1;
+  margin: 5px;
+}
+
+.Hero-section-three-text-three {
+  flex: 1;
+}
+
+.Hero-section-three-text-one {
+  margin-left: 0;
+  /* margin-top: 5%; */
+}
+
+.Hero-section-three-text-two {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 8%;
+  /* margin-left: 20%; */
+}
+
+.Hero-section-three-text-two p {
+  margin: 1%;
+  margin-left: 20%;
+}
+
+.Hero-section-three-text-two img {
+  margin-top: 5px;
+  margin-left: 30%;
+  max-width: 130%;
+  height: auto;
+}
+
+.Hero-section-three-text-one .stroke,
+.Hero-section-three-text-three .stroke {
+  color: transparent; /* Hide the text color */
+  -webkit-text-stroke: 1px #e2dcc8; /* Stroke width and color */
+}
+
+.Hero-section-three-text-one h1 {
+  font-size: 94px;
+  margin-left: 30%;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  padding-left: 15%;
+  margin-right: -15%;
+  /* margin-left: 40%; */
+}
+
+.Hero-section-three-text-three h1 {
+  font-size: 94px;
+  margin-right: 0%;
+  /* margin-left: 10%; */
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.Hero-section-three-text-one p {
+  font-size: 18px;
+  margin: 2%;
+  line-height: 1.5;
+}
+
+.Hero-section-three-text-three p {
+  font-size: 18px;
+  margin: 1%;
+  margin-right: 0%;
+  /* margin-left: 10%; */
+  line-height: 1.5;
+}
+
+.Hero-section-three-text-three {
+  margin-right: auto; /* Pushes the element to the right */
+  margin-left: 90px;
+}

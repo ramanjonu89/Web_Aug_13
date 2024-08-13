@@ -1,0 +1,259 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "MerichTitle1", sans-serif;
+  overflow-x: hidden; /* Disable horizontal overflow */
+  scroll-behavior: smooth;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+@font-face {
+  font-family: "MerichTitle1";
+  src: url("Merich.ttf") format("ttf");
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 5%;
+  background-color: #333;
+  /* padding: 10px; */
+  /* padding-left: 30px; */
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: flex-start;
+}
+
+.progress-loader {
+  top: 0;
+  left: 93%;
+  position: absolute;
+  width: 5px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.progress {
+  width: 5px;
+  background: #26d3b4;
+  border-radius: 10px;
+  /* transition: height 0.5s; */
+  transition: height 0.3s ease-in-out;
+}
+
+.sidebar .nav-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 80px;
+}
+
+.sidebar .nav-links li {
+  margin: 2px 0;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+}
+
+.sidebar .nav-links li img.nav-dot {
+  width: 5px; /* Adjust size as needed */
+  height: 5px; /* Adjust size as needed */
+  margin: 10px 0; /* Adjust spacing as needed */
+}
+
+.sidebar .nav-links li a {
+  color: #e2dcc8;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+.sidebar .nav-links li.active a,
+.sidebar .nav-links li a:hover {
+  color: #26d3b4;
+}
+
+.heading {
+  position: relative;
+  display: inline-block;
+  display: flex;
+  flex-direction: column;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: max-content; /* Adjust to fit the content */
+  background-color: #333;
+  color: #e2dcc8;
+  text-align: center;
+  padding: 5px 10px; /* Adjust padding for better fit */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%; /* Position above the heading */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s, padding 0.3s; /* Add transition for padding */
+  font-size: 15px;
+}
+
+.heading:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  padding: 10px; /* Adjust padding on hover */
+  margin-left: 5px; /* Remove margin on hover */
+}
+
+/* Main Content Styles */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 5%;
+  padding: 0px;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  /* height: 100vh; */
+}
+
+.content {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100vw;
+  /* height: 100vh; */
+  scroll-behavior: smooth;
+}
+
+.content-item {
+  flex: 0 0 auto;
+  height: 100vh;
+}
+
+.hero-section-three-item {
+  width: 200vw;
+}
+
+.hero-section-four-item {
+  width: 100vw;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* Progress Loader */
+.progress-loader[aria-live="polite"] .progress {
+  transition: height 0.3s ease-in-out;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 7%;
+  }
+
+  .main-content {
+    margin-left: 7%;
+  }
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    width: 10%;
+  }
+
+  .main-content {
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 15%;
+  }
+
+  .main-content {
+    margin-left: 15%;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 20%;
+    padding: 5px;
+  }
+
+  .main-content {
+    margin-left: 20%;
+  }
+
+  .sidebar .nav-links li {
+    font-size: 12px;
+    margin: 5px 0;
+    margin-left: 30px;
+  }
+
+  .sidebar .nav-links li a {
+    padding: 5px;
+  }
+}
+
+
+.horizontal .content {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+}
+
+.vertical {
+  /* overflow-x: hidden !important; */
+  overflow-y: auto !important;
+height: 100vh;
+  scroll-snap-type: y mandatory;
+
+}
+.services-visible{
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.make_me_vertical{
+  width: 100%;
+  height: 100%;
+}
+.after_team { width: 100%; height: 100%; }

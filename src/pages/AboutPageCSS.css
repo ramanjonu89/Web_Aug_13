@@ -1,0 +1,207 @@
+/* Keyframes for the slide-in animations */
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Classes to trigger the animations */
+.slide-in-left {
+  animation: slide-in-left 1s forwards;
+}
+
+.slide-in-right {
+  animation: slide-in-right 2s forwards;
+}
+
+/* Existing CSS styles */
+.aboutpage-container {
+  background-color: #1b1b1b;
+  color: #e2dcc8;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  /* margin-left: 30%; */
+  padding-left: 15%;
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+}
+
+.aboutpage-content,
+.vision-mission-container,
+.focus-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.aboutpage-content {
+  width: 40%;
+}
+
+.vision-mission-container {
+  width: 40%;
+}
+
+.focus-container {
+  width: 30%;
+  align-items: flex-start;
+  padding-top: 3%;
+}
+
+.about-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Ensure no conflicting padding or positioning that might affect rotation */
+}
+
+.about-column h1 {
+  margin: 0;
+  margin-top: 130%;
+  transform: rotate(90deg);
+  transform-origin: left bottom;
+  position: absolute;
+  top: 150px;
+  font-size: 140px; /* Set font size */
+  /* left: -150px; */
+}
+
+.us-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-left: 10px;
+}
+
+.us-column h1 {
+  margin: 0;
+  margin-left: 45%;
+  /* transform: rotate(-90deg); */
+  transform-origin: left bottom;
+  position: absolute;
+  top: 30%;
+  color: transparent;
+  -webkit-text-stroke: 1px #e2dcc8;
+  font-size: 140px;
+  left: -60px;
+}
+
+.us-column p {
+  margin-top: 0;
+  position: relative;
+  margin-left: 10%;
+  padding: 15%;
+  top: -100px;
+  order: -1;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+}
+
+.vision-container,
+.mission-container {
+  margin-bottom: 10%;
+  margin-right: 80px;
+}
+
+.vision-container h1,
+.mission-container h1 {
+  margin-bottom: 2%;
+  font-size: 48px;
+}
+
+.vision-container p,
+.mission-container p {
+  margin-bottom: 2%;
+  font-size: 18px;
+}
+
+.focus-container h1 {
+  margin-bottom: 2%;
+  font-size: 48px;
+  margin-left: -40px;
+}
+
+.focus-container p {
+  margin-bottom: 2%;
+  font-size: 18px;
+  margin-right: 50px;
+  margin-left: -40px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .aboutpage-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .aboutpage-content,
+  .vision-mission-container,
+  .focus-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .about-column {
+    padding-right: 0;
+    padding-top: 0;
+  }
+
+  .us-column {
+    padding-left: 0;
+  }
+
+  .about-column h1,
+  .us-column h1 {
+    transform: rotate(0);
+    position: relative;
+    font-size: 140px;
+  }
+
+  .us-column p {
+    order: -1;
+    text-align: left;
+  }
+
+  .focus-container {
+    align-items: center;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-column h1 {
+    transform: rotate(0);
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 140px; /* Maintain font size */
+    white-space: normal; /* Allow text to wrap on smaller screens */
+  }
+}
