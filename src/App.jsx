@@ -11,7 +11,7 @@ import SideBar from "./components/SideBar";
 import HeroSectionTwo from "./pages/HeroSectionTwo";
 import HeroSectionThree from "./pages/HeroSectionThree";
 import HeroSectionFour from "./pages/HeroSectionFour";
-import { debounce } from "lodash";
+import debounce from 'lodash.debounce';
 import "./App.css";
 
 const App = () => {
@@ -27,17 +27,18 @@ const App = () => {
 
   // mouse event 
   useEffect(() => {
+    let prevScrollTop = 0; // Track previous scroll position for wheel event
+
     const onScroll = debounce(() => {
       if (!contentRef.current) return;
-  
+
       const currentScrollPosition = contentRef.current.scrollLeft;
-      const teamSection = document.querySelector("#team");
-  
+      const teamSection = document.querySelector("#make_me_vertical");
+
       if (teamSection) {
         const teamSectionOffset = teamSection.offsetLeft;
-  
-        // Enable vertical scrolling when any part of the Team section is visible
-        if (currentScrollPosition >= teamSectionOffset - window.innerWidth / 4) {
+
+        if (currentScrollPosition >= teamSectionOffset - window.innerWidth / 4.5) {
           setIsHorizontal(false);
           setIsVerticalEnabled(true);
           console.log("Horizontal scroll ended. Vertical scroll started.");
@@ -45,27 +46,42 @@ const App = () => {
           setIsHorizontal(true);
           setIsVerticalEnabled(false);
         }
-  
+
         setScrollPosition(currentScrollPosition);
       }
     }, 100);
-  
+
     const onWheel = debounce((event) => {
+      if (!contentRef.current) return;
+
       const teamSection = document.querySelector("#team");
-      const currentScrollPosition = contentRef.current.scrollLeft;
-    
+      const scrollTop = contentRef.current.scrollTop;
+      const scrollLeft = contentRef.current.scrollLeft;
+
+      // Get the right half of the team section
+      const teamSectionRect = teamSection.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+
+      // Right half of the team section
+      const rightHalfStart = teamSectionRect.left + teamSectionRect.width / 2;
+      const rightHalfEnd = teamSectionRect.right;
+
+      // Log mouse wheel activity specifically for the right half
+      if (scrollLeft + viewportWidth / 2 >= rightHalfStart && scrollLeft + viewportWidth / 2 <= rightHalfEnd) {
+        console.log("Mouse wheel activity detected on the right half of the Team section.");
+      }
+
       if (isHorizontal) {
         // Handle horizontal scroll
         event.preventDefault();
-        const scrollSpeed = 3; // Increase this value to make the horizontal scroll faster
+        const scrollSpeed = 3;
         contentRef.current.scrollBy({
           top: 0,
-          left: -event.deltaY * scrollSpeed, // Multiply the scroll delta by the speed factor
+          left: -event.deltaY * scrollSpeed,
           behavior: "smooth",
         });
-    
-        // Disable vertical scrolling if reverse scrolling horizontally before reaching the Team section
-        if (currentScrollPosition <= teamSection.offsetLeft - window.innerWidth / 2) {
+
+        if (scrollLeft <= teamSection.offsetLeft - window.innerWidth / 4) {
           setIsVerticalEnabled(false);
           setIsHorizontal(true);
           console.log("Reverse horizontal scroll detected. Vertical scroll disabled.");
@@ -73,29 +89,34 @@ const App = () => {
       } else {
         // Handle vertical scroll
         event.preventDefault();
-        const scrollTop = contentRef.current.scrollTop;
-    
+
+        // Check if scrolling down
+        if (scrollTop > prevScrollTop) {
+          if (scrollTop > teamSection.offsetTop && scrollTop <= teamSection.offsetTop + teamSection.offsetHeight) {
+            console.log("Mouse wheel scrolling down within the Team section.");
+          }
+        }
+
         if (scrollTop <= teamSection.offsetTop) {
-          // If at the top of the Team section and scrolling up, switch back to horizontal scroll
           setIsHorizontal(true);
         } else {
-          // Continue with vertical scrolling
           contentRef.current.scrollBy({
             top: event.deltaY,
             left: 0,
             behavior: "smooth",
           });
         }
+
+        prevScrollTop = scrollTop; // Update previous scroll position
       }
     }, 100);
-    
-  
+
     const currentContentRef = contentRef.current;
     if (currentContentRef) {
       currentContentRef.addEventListener("scroll", onScroll);
       currentContentRef.addEventListener("wheel", onWheel);
     }
-  
+
     return () => {
       if (currentContentRef) {
         currentContentRef.removeEventListener("scroll", onScroll);
@@ -103,6 +124,7 @@ const App = () => {
       }
     };
   }, [isHorizontal, isVerticalEnabled]);
+  
   
   
 
@@ -180,7 +202,7 @@ const App = () => {
           <div id="about" className="content-item">
             <AboutPage />
           </div>
-          <div className="make_me_vertical">
+          <div className="make_me_vertical" id="make_me_vertical">
             <div id="team" className="content-item">
               <TeamPage />
             </div>
