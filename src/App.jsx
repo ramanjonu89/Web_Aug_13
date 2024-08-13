@@ -90,6 +90,12 @@ const App = () => {
             setIsHorizontal(true);
           } else {
             if (isTeamSectionVisible) {
+              if (event.deltaY > 0) {
+                console.log("Scrolling down within Team section.");
+              } else if (event.deltaY < 0) {
+                console.log("Scrolling up within Team section.");
+              }
+
               contentRef.current.scrollBy({
                 top: event.deltaY,
                 left: 0,
