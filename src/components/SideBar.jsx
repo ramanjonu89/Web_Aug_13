@@ -1,61 +1,140 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { HashLink as Link } from "react-router-hash-link";
+import React, { useEffect, useState, useCallback, useRef } from "react";
+import { Link } from "react-router-dom"; // Assuming you're using react-router for navigation
 import dotImage from "../assets/Ellipse 1444.png";
 
-const SideBar = ({ progressRef }) => {
-  const location = useLocation();
-  const [activeLink, setActiveLink] = useState("#home");
-  const contentRef = useRef(null);
-  const sectionsRef = useRef({
-    "#home": React.createRef(),
-    "#about": React.createRef(),
-    "#team": React.createRef(),
-    "#services": React.createRef(),
-    "#portfolio": React.createRef(),
-    "#blog": React.createRef(),
-    "#contact": React.createRef(),
-    // Add Hero sections here for scroll detection
-    "#hero2": React.createRef(),
-    "#hero3": React.createRef(),
-    "#hero4": React.createRef(),
-  });
+const SideBar = () => {
+  const [activeSection, setActiveSection] = useState("home");
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressRef = useRef(null);
 
-  useEffect(() => {
-    setActiveLink(location.hash || "#home");
+  const handleScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    const scrollHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollY / scrollHeight) * 100;
+    setScrollProgress(progress);
 
-    const onScroll = () => {
-      if (!contentRef.current) return; // Early return if ref is not set
+    const horizontalScroll = document.querySelector(".horizontal_scroll");
+    const horizontalRect = horizontalScroll.getBoundingClientRect();
 
-      const scrollPosition = contentRef.current.scrollLeft;
-      const windowWidth = window.innerWidth;
-
-      for (let i = Object.keys(sectionsRef.current).length - 1; i >= 0; i--) {
-        const sectionId = Object.keys(sectionsRef.current)[i];
-        const sectionRef = sectionsRef.current[sectionId].current;
-
-        if (
-          sectionRef &&
-          sectionRef.offsetLeft <= scrollPosition + windowWidth / 3
-        ) {
-          setActiveLink(sectionId);
+    if (scrollY < horizontalRect.height) {
+      //In the horizontal scroll area
+      const scrollLeft = horizontalScroll.scrollLeft;
+      const sectionWidth = window.innerWidth;
+      const sectionIndex = Math.round(scrollLeft / sectionWidth);
+      const horizontalSections = [
+        "home",
+        "hero2",
+        "hero3",
+        "hero4",
+        "about",
+        "team",
+      ];
+      setActiveSection(horizontalSections[sectionIndex] || "home");
+    } else {
+      // We're in the vertical scroll area
+      const sections = ["services", "portfolio", "blog", "contact"];
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollY + 50) {
+          setActiveSection(sections[i]);
           break;
         }
       }
-    };
-
-    const currentContentRef = contentRef.current;
-
-    if (currentContentRef) {
-      currentContentRef.addEventListener("scroll", onScroll);
     }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    const horizontalScroll = document.querySelector(".horizontal_scroll");
+    horizontalScroll.addEventListener("scroll", handleScroll);
 
     return () => {
-      if (currentContentRef) {
-        currentContentRef.removeEventListener("scroll", onScroll);
-      }
+      window.removeEventListener("scroll", handleScroll);
+      horizontalScroll.removeEventListener("scroll", handleScroll);
     };
-  }, [location]);
+  }, [handleScroll]);
+
+  useEffect(() => {
+    if (progressRef.current) {
+      progressRef.current.style.height = `${scrollProgress}%`;
+    }
+  }, [scrollProgress]);
+
+  
+  const handleNavigation = useCallback((sectionId) => {
+    // Array of horizontal section IDs
+    const horizontalSections = [
+      "home",
+      "hero2",
+      "hero3",
+      "hero4",
+      "about",
+      "team",
+    ];
+
+    const section = document.getElementById(sectionId);
+
+    // Check if the section exists
+    if (!section) {
+      console.warn(`Section with ID "${sectionId}" not found.`);
+      return;
+    }
+    if (horizontalSections.includes(sectionId)) {
+      // Smooth scroll for horizontal sections
+      section.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      const yOffset = -50; 
+      const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      console.log("Navigating to vertical section:", section);
+      console.log("Scroll position (y):", y);
+  
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  }, []);
+  
+  
+  // const handleNavigation = useCallback((sectionId) => {
+  //   const section = document.getElementById(sectionId);
+  //   if (section) {
+  //     const horizontalSections = [
+  //       "home",
+  //       "hero2",
+  //       "hero3",
+  //       "hero4",
+  //       "about",
+  //       "team",
+  //     ];
+
+  //     if (horizontalSections.includes(sectionId)) {
+  //       // For horizontal scrolling sections
+  //       const scrollContainer = document.querySelector(".horizontal_scroll");
+  //       if (scrollContainer) {
+  //         const sectionIndex = horizontalSections.indexOf(sectionId);
+  //         const offsetLeft = sectionIndex * window.innerWidth;
+
+  //         // Debugging logs
+  //         console.log("Navigating to section:", sectionId);
+  //         console.log("Section index:", sectionIndex);
+  //         console.log("Offset left:", offsetLeft);
+
+  //         scrollContainer.scrollTo({ left: offsetLeft, behavior: "smooth" });
+  //         window.scrollTo({ top: 0, behavior: "smooth" });
+  //       }
+  //     } else {
+  //       // For vertical scrolling sections
+  //       const yOffset = -50; // Adjust this value to account for any fixed headers
+  //       const y =
+  //         section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+  //       // Debugging logs
+  //       console.log("Navigating to vertical section:", sectionId);
+  //       console.log("Scroll position (y):", y);
+
+  //       window.scrollTo({ top: y, behavior: "smooth" });
+  //     }
+  //   }
+  // }, []);
 
   return (
     <nav className="sidebar" aria-label="Sidebar Navigation">
@@ -63,253 +142,43 @@ const SideBar = ({ progressRef }) => {
         <div className="progress" ref={progressRef}></div>
       </div>
       <ul className="nav-links" role="list">
-        <li className={activeLink === "#home" ? "active" : ""}>
-          <Link smooth to="#home" aria-label="Navigate to Home" role="link">
-            <p className="heading" title="Home">
-              H<span className="tooltip">Home</span>
-            </p>
-          </Link>
-        </li>
-        <li>
-          <img src={dotImage} alt="dot" className="nav-dot" />
-        </li>
-        <li className={activeLink === "#about" ? "active" : ""}>
-          <Link smooth to="#about" aria-label="Navigate to About" role="link">
-            <p className="heading" title="About us">
-              A<span className="tooltip">About</span>
-            </p>
-          </Link>
-        </li>
-        <li>
-          <img src={dotImage} alt="dot" className="nav-dot" />
-        </li>
-        <li className={activeLink === "#team" ? "active" : ""}>
-          <Link smooth to="#team" aria-label="Navigate to Team" role="link">
-            <p className="heading" title="Team">
-              T<span className="tooltip">Team</span>
-            </p>
-          </Link>
-        </li>
-        <li>
-          <img src={dotImage} alt="dot" className="nav-dot" />
-        </li>
-        <li className={activeLink === "#services" ? "active" : ""}>
-          <Link
-            smooth
-            to="#services"
-            aria-label="Navigate to Services"
-            role="link"
-          >
-            <p className="heading" title="Services">
-              S<span className="tooltip">Services</span>
-            </p>
-          </Link>
-        </li>
-        <li>
-          <img src={dotImage} alt="dot" className="nav-dot" />
-        </li>
-        <li className={activeLink === "#portfolio" ? "active" : ""}>
-          <Link
-            smooth
-            to="#portfolio"
-            aria-label="Navigate to Portfolio"
-            role="link"
-          >
-            <p className="heading" title="Portfolio">
-              P<span className="tooltip">Portfolio</span>
-            </p>
-          </Link>
-        </li>
-        <li>
-          <img src={dotImage} alt="dot" className="nav-dot" />
-        </li>
-        <li className={activeLink === "#blog" ? "active" : ""}>
-          <Link smooth to="#blog" aria-label="Navigate to Blog" role="link">
-            <p className="heading" title="Blog">
-              B<span className="tooltip">Blog</span>
-            </p>
-          </Link>
-        </li>
-        <li>
-          <img src={dotImage} alt="dot" className="nav-dot" />
-        </li>
-        <li
-          className={
-            activeLink === "#contact" ? "active contact-link" : "contact-link"
-          }
-        >
-          <Link
-            smooth
-            to="#contact"
-            aria-label="Navigate to Contact"
-            role="link"
-          >
-            <p className="heading" title="Contact us">
-              C<span className="tooltip">Contact</span>
-            </p>
-          </Link>
-        </li>
+        {[
+          { id: "home", label: "Home", letter: "H" },
+          { id: "about", label: "About", letter: "A" },
+          { id: "team", label: "Team", letter: "T" },
+          { id: "services", label: "Services", letter: "S" },
+          { id: "portfolio", label: "Portfolio", letter: "P" },
+          { id: "blog", label: "Blog", letter: "B" },
+          { id: "contact", label: "Contact", letter: "C" },
+        ].map((section, index) => (
+          <React.Fragment key={section.id}>
+            <li className={activeSection === section.id ? "active" : ""}>
+              <Link
+                smooth="true"
+                to={`#${section.id}`}
+                aria-label={`Navigate to ${section.label}`}
+                role="link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigation(section.id);
+                }}
+              >
+                <p className="heading" title={section.label}>
+                  {section.letter}
+                  <span className="tooltip">{section.label}</span>
+                </p>
+              </Link>
+            </li>
+            {index < 6 && (
+              <li>
+                <img src={dotImage} alt="dot" className="nav-dot" />
+              </li>
+            )}
+          </React.Fragment>
+        ))}
       </ul>
     </nav>
   );
 };
 
 export default SideBar;
-
-// import React, { useState, useEffect, useRef } from "react";
-// import { useLocation } from "react-router-dom";
-// import { HashLink as Link } from "react-router-hash-link";
-// import dotImage from "../assets/Ellipse 1444.png";
-
-// const SideBar = () => {
-//   const location = useLocation();
-//   const [activeLink, setActiveLink] = useState("#home");
-//   const contentRef = useRef(null);
-//   const sectionsRef = useRef({
-//     "#home": React.createRef(),
-//     "#about": React.createRef(),
-//     "#team": React.createRef(),
-//     "#services": React.createRef(),
-//     "#portfolio": React.createRef(),
-//     "#blog": React.createRef(),
-//     "#contact": React.createRef(),
-//     // Add Hero sections here for scroll detection
-//     "#hero2": React.createRef(),
-//     "#hero3": React.createRef(),
-//     "#hero4": React.createRef(),
-//   });
-
-//   useEffect(() => {
-//     setActiveLink(location.hash || "#home");
-
-//     const onScroll = () => {
-//       if (!contentRef.current) return; // Early return if ref is not set
-
-//       const scrollPosition = contentRef.current.scrollLeft;
-//       const windowWidth = window.innerWidth;
-
-//       for (let i = Object.keys(sectionsRef.current).length - 1; i >= 0; i--) {
-//         const sectionId = Object.keys(sectionsRef.current)[i];
-//         const sectionRef = sectionsRef.current[sectionId].current;
-
-//         if (
-//           sectionRef &&
-//           sectionRef.offsetLeft <= scrollPosition + windowWidth / 3
-//         ) {
-//           setActiveLink(sectionId);
-//           break;
-//         }
-//       }
-//     };
-
-//     const currentContentRef = contentRef.current;
-
-//     if (currentContentRef) {
-//       currentContentRef.addEventListener("scroll", onScroll);
-//     }
-
-//     return () => {
-//       if (currentContentRef) {
-//         currentContentRef.removeEventListener("scroll", onScroll);
-//       }
-//     };
-//   }, [location]);
-
-//   return (
-//     <nav className="sidebar" aria-label="Sidebar Navigation">
-//       <div className="progress-loader">
-//         <div className="progress"></div>
-//       </div>
-//       <ul className="nav-links" role="list">
-//         <li className={activeLink === "#home" ? "active" : ""}>
-//           <Link smooth to="#home" aria-label="Navigate to Home" role="link">
-//             <p className="heading" title="Home">
-//               H<span className="tooltip">Home</span>
-//             </p>
-//           </Link>
-//         </li>
-//         <li>
-//           <img src={dotImage} alt="dot" className="nav-dot" />
-//         </li>
-//         <li className={activeLink === "#about" ? "active" : ""}>
-//           <Link smooth to="#about" aria-label="Navigate to About" role="link">
-//             <p className="heading" title="About us">
-//               A<span className="tooltip">About</span>
-//             </p>
-//           </Link>
-//         </li>
-//         <li>
-//           <img src={dotImage} alt="dot" className="nav-dot" />
-//         </li>
-//         <li className={activeLink === "#team" ? "active" : ""}>
-//           <Link smooth to="#team" aria-label="Navigate to Team" role="link">
-//             <p className="heading" title="Team">
-//               T<span className="tooltip">Team</span>
-//             </p>
-//           </Link>
-//         </li>
-//         <li>
-//           <img src={dotImage} alt="dot" className="nav-dot" />
-//         </li>
-//         <li className={activeLink === "#services" ? "active" : ""}>
-//           <Link
-//             smooth
-//             to="#services"
-//             aria-label="Navigate to Services"
-//             role="link"
-//           >
-//             <p className="heading" title="Services">
-//               S<span className="tooltip">Services</span>
-//             </p>
-//           </Link>
-//         </li>
-//         <li>
-//           <img src={dotImage} alt="dot" className="nav-dot" />
-//         </li>
-//         <li className={activeLink === "#portfolio" ? "active" : ""}>
-//           <Link
-//             smooth
-//             to="#portfolio"
-//             aria-label="Navigate to Portfolio"
-//             role="link"
-//           >
-//             <p className="heading" title="Portfolio">
-//               P<span className="tooltip">Portfolio</span>
-//             </p>
-//           </Link>
-//         </li>
-//         <li>
-//           <img src={dotImage} alt="dot" className="nav-dot" />
-//         </li>
-//         <li className={activeLink === "#blog" ? "active" : ""}>
-//           <Link smooth to="#blog" aria-label="Navigate to Blog" role="link">
-//             <p className="heading" title="Blog">
-//               B<span className="tooltip">Blog</span>
-//             </p>
-//           </Link>
-//         </li>
-//         <li>
-//           <img src={dotImage} alt="dot" className="nav-dot" />
-//         </li>
-//         <li
-//           className={
-//             activeLink === "#contact" ? "active contact-link" : "contact-link"
-//           }
-//         >
-//           <Link
-//             smooth
-//             to="#contact"
-//             aria-label="Navigate to Contact"
-//             role="link"
-//           >
-//             <p className="heading" title="Contact us">
-//               C<span className="tooltip">Contact</span>
-//             </p>
-//           </Link>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// };
-
-// export default SideBar;
