@@ -162,17 +162,21 @@
 
 // export default SideBar;
 
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useCallback, useRef, useContext } from "react";
 import { Link } from "react-router-dom"; 
 import dotImage from "../assets/Ellipse 1444.png";
 import WDLogoSidebar from "../assets/webdaddy-final-logo.png";
 
+// imported context to update the internal blogpage visibility
+import { BlogContext } from "../Context/BlogContext";
+
+
 const SideBar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrollProgress, setScrollProgress] = useState(0);
-
-  const [maintain,setMaintain] =useState(false);
   const progressRef = useRef(null);
+
+  const {setIsblogpage} =useContext(BlogContext)  // context is used here 
 
   const handleScroll = useCallback(() => {
     const scrollY = window.scrollY;
@@ -229,7 +233,12 @@ const SideBar = () => {
     }
   }, [scrollProgress]);
 
+
+
   const handleNavigation = useCallback((sectionId) => {
+
+    setIsblogpage(false);  //state  value is set  to false tohide internal blog page
+
     const horizontalSections = ["home", "hero2", "hero3", "hero4", "about", "team"];
     const section = document.getElementById(sectionId);
     if (!section) {
