@@ -168,7 +168,7 @@ import dotImage from "../assets/Ellipse 1444.png";
 import WDLogoSidebar from "../assets/webdaddy-final-logo.png";
 
 // imported context to update the internal blogpage visibility
-import { BlogContext } from "../Context/BlogContext";
+import { BlogContext } from "../BlogContext";
 
 
 const SideBar = () => {
