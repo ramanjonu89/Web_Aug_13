@@ -18,7 +18,7 @@ import AdditionalPagethree from "./pages/AdditionalPagethree";
 import Loader from "./components/Loader";
 import BlogInternalPage from "./pages/BlogInternalPage";
 import "./App.css";
-import { BlogProvider, BlogContext } from "./Context/BlogContext";
+import { BlogProvider, BlogContext } from "./BlogContext";
 
 
 
