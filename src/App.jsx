@@ -40,8 +40,19 @@ const App = () => {
       const maxPages = 6;
       percentage = Math.max(0, Math.min(percentage, maxPages * 108));
       scrollSection.style.transform = `translate3d(${-percentage}vw, 0, 0)`;
+      
+      // Add logic to hide/show sections based on scroll
+      const blogInternal = document.getElementById("bloginternal");
+      const contactPage = document.getElementById("contact");
+      
+      if (window.scrollY + window.innerHeight > blogInternal.offsetTop) {
+        contactPage.style.display = "none"; // Hide contact page if blog internal is visible
+      } else {
+        contactPage.style.display = "block"; // Show contact page if blog internal is not visible
+      }
     });
   }, []);
+  
 
   useEffect(() => {
     if (!loading) {
@@ -88,6 +99,9 @@ const App = () => {
             <section className="container">
               <AdditionalPagethree />
             </section>
+                 <section id="bloginternal" className="container">
+              <BlogInternalPage />
+            </section>
             <section id="services" className="container">
               <ServicesPage />
             </section>
@@ -103,9 +117,7 @@ const App = () => {
             <section id="blog" className="container">
               <BlogPage />
             </section>
-            <section id="bloginternal" className="container">
-              <BlogInternalPage />
-            </section>
+       
 
             {/* Added new section for blogs internal page  */}
             <section id="contact" className="container">
