@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import earthVideo from "../assets/black_global_Video.mp4";
 import mailImage from "../assets/mail.png";
-import "./ContactPageCSS.css";
 import SocialButtons from "./SocialMediabtnPage";
+import APTWavesVideo from "../assets/tactus-waves-hero.mp4";
+import "./ContactPageCSS.css";
+import { BlogContext } from "../BlogContext";
 
 const ContactPage = () => {
+  const {isblogpage} =useContext(BlogContext);
+
+  console.log(isblogpage);
+  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    phone: "", // Add phone number field
     message: "",
   });
   const [videoEnded, setVideoEnded] = useState(false);
@@ -65,10 +72,13 @@ const ContactPage = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    console.log("Form data on change:", { ...formData, [name]: value }); // Log updated form data
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("Form data submitted:", formData);
 
     await fetch(
       "https://script.google.com/macros/s/AKfycbx0RJHdo_gqHBKgLSgYVyN1kdTHfpze3GJfFfACjxBiYvW0_n_FCi37Q7U7g_H8sYFT/exec",
@@ -82,14 +92,36 @@ const ContactPage = () => {
       }
     );
 
-    console.log("Form submitted");
+    console.log("Form data submitted:", formData);
 
     // Reset form
-    setFormData({ firstName: "", lastName: "", email: "", message: "" });
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
   };
 
   return (
+   <>
+   {isblogpage && (
+
+
     <div className="contact-page" id="contact">
+      <div className="background-video-contactpage-div">
+        <video
+          autoPlay
+          playsInline
+          loop
+          muted
+          id="background-video-contactpage"
+        >
+          <source src={APTWavesVideo} type="video/mp4" />
+        </video>
+      </div>
+
       {!videoEnded && (
         <div className="video-container">
           <video
@@ -107,9 +139,10 @@ const ContactPage = () => {
 
       {videoEnded && (
         <>
+          <div className="gradient-overlay-contactpage"></div>
           <div className="heading-conatact">
             <h1>CONTACT</h1>
-            <h1 className="stroke">US</h1>
+            <h1 className="stroke blend-contactpage">US</h1>
           </div>
 
           <div className="contact-wrapper">
@@ -117,7 +150,7 @@ const ContactPage = () => {
               <div>
                 <div className="location-loader-shape-3"></div>
                 <p className="contact-info-location-text">
-                  22 Sin Ming Lane,#06-76 Midview City,Singapore573969.
+                  22 Sin Ming Lane, #06-76 Midview City, Singapore 573969.
                 </p>
               </div>
               <div>
@@ -187,6 +220,17 @@ const ContactPage = () => {
                     <label>Email</label>
                   </div>
                   <div className="form-group">
+                    <input
+                      type="tel" // Use 'tel' type for phone number
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                      placeholder=" "
+                    />
+                    <label>Phone Number</label>
+                  </div>
+                  <div className="form-group">
                     <textarea
                       name="message"
                       value={formData.message}
@@ -229,6 +273,8 @@ const ContactPage = () => {
         </>
       )}
     </div>
+   )}
+   </>
   );
 };
 
@@ -237,8 +283,9 @@ export default ContactPage;
 // import React, { useState, useEffect } from "react";
 // import earthVideo from "../assets/black_global_Video.mp4";
 // import mailImage from "../assets/mail.png";
-// import "./ContactPageCSS.css";
 // import SocialButtons from "./SocialMediabtnPage";
+// import APTWavesVideo from "../assets/tactus-waves-hero.mp4";
+// import "./ContactPageCSS.css";
 
 // const ContactPage = () => {
 //   const [formData, setFormData] = useState({
@@ -248,6 +295,43 @@ export default ContactPage;
 //     message: "",
 //   });
 //   const [videoEnded, setVideoEnded] = useState(false);
+//   const [animateSocialButtons, setAnimateSocialButtons] = useState(false);
+
+//   useEffect(() => {
+//     if (videoEnded) {
+//       setAnimateSocialButtons(true);
+//     }
+//   }, [videoEnded]);
+
+//   useEffect(() => {
+//     if (videoEnded) {
+//       // Add animation classes to the heading elements
+//       const headingH1 = document.querySelector(".heading-conatact h1");
+//       const headingStroke = document.querySelector(
+//         ".heading-conatact h1.stroke"
+//       );
+
+//       if (headingH1 && headingStroke) {
+//         headingH1.classList.add("animate");
+//         headingStroke.classList.add("animate");
+//       }
+//     }
+//   }, [videoEnded]);
+
+//   useEffect(() => {
+//     if (videoEnded) {
+//       // Add animation classes to the contact-info, contact-container, and contact-map elements
+//       const contactInfo = document.querySelector(".contact-info");
+//       const contactContainer = document.querySelector(".contact-container");
+//       const contactMap = document.querySelector(".contact-map");
+
+//       if (contactInfo && contactContainer && contactMap) {
+//         contactInfo.classList.add("animate");
+//         contactContainer.classList.add("animate");
+//         contactMap.classList.add("animate");
+//       }
+//     }
+//   }, [videoEnded]);
 
 //   useEffect(() => {
 //     if (!videoEnded) {
@@ -288,7 +372,19 @@ export default ContactPage;
 //   };
 
 //   return (
-//     <div className="contact-page" id="contact">
+//     <div className="contact-page " id="contact">
+//       <div className="background-video-contactpage-div ">
+//         <video
+//           autoPlay
+//           playsInline
+//           loop
+//           muted
+//           id="background-video-contactpage"
+//         >
+//           <source src={APTWavesVideo} type="video/mp4" />
+//         </video>
+//       </div>
+
 //       {!videoEnded && (
 //         <div className="video-container">
 //           <video
@@ -306,9 +402,10 @@ export default ContactPage;
 
 //       {videoEnded && (
 //         <>
-//           <div className="heading-conatact">
+//           <div className="gradient-overlay-contactpage"></div>
+//           <div className="heading-conatact ">
 //             <h1>CONTACT</h1>
-//             <h1 className="stroke">US</h1>
+//             <h1 className="stroke .blend-contactpage">US</h1>
 //           </div>
 
 //           <div className="contact-wrapper">
@@ -316,7 +413,7 @@ export default ContactPage;
 //               <div>
 //                 <div className="location-loader-shape-3"></div>
 //                 <p className="contact-info-location-text">
-//                   22 Sin Ming Lane,#06-76 Midview City,Singapore573969.
+//                   22 Sin Ming Lane,#06-76 Midview City,Singapore 573969.
 //                 </p>
 //               </div>
 //               <div>
@@ -407,13 +504,22 @@ export default ContactPage;
 //                 height="100%"
 //                 style={{ border: 0 }}
 //                 allowFullScreen=""
-//                 loading="lazy"
+//                 // loading="lazy"
 //                 referrerPolicy="no-referrer-when-downgrade"
 //               ></iframe>
 //             </div>
 
-//             <div className="social-buttons-container">
+//             <div
+//               className={`social-buttons-container ${
+//                 animateSocialButtons ? "animate" : ""
+//               }`}
+//             >
 //               <SocialButtons />
+//             </div>
+//           </div>
+//           <div className="footer">
+//             <div className="footer-bottom">
+//               <p>&copy; 2024 WEBDADDY. All rights reserved.</p>
 //             </div>
 //           </div>
 //         </>
@@ -423,3 +529,41 @@ export default ContactPage;
 // };
 
 // export default ContactPage;
+
+// @media (max-width: 600px) {
+//   .contact-wrapper {
+//     grid-template-columns: 1fr;
+//     grid-template-rows: auto auto auto;
+//     width: 90vw;
+//     height: auto;
+//   }
+
+//   .contact-info {
+//     grid-column: 1 / 2;
+//     grid-row: 1 / 2;
+//     position: static;
+//     transform: none;
+//   }
+
+//   .contact-container {
+//     grid-column: 1 / 2;
+//     grid-row: 2 / 3;
+//   }
+
+//   .contact-map {
+//     grid-column: 1 / 2;
+//     grid-row: 3 / 4;
+//   }
+// }
+
+// @media (max-width: 768px) {
+//   .contact-wrapper {
+//     grid-template-columns: 1fr;
+//     text-align: center;
+//   }
+
+//   .social-buttons-container {
+//     bottom: 10px;
+//     right: 10px;
+//   }
+// }
