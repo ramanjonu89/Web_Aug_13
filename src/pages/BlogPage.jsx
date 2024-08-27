@@ -11,7 +11,7 @@ import "./BlogPageCSS.css";
 import PortfolioPage from "./PortfolioPage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { BlogContext } from "../Context/BlogContext";
+import { BlogContext } from "../BlogContext";
 
 const BlogPage = () => {
   const {  setblogId,setIsblogpage } = useContext(BlogContext);
