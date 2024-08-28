@@ -103,10 +103,18 @@ const ContactPage = () => {
       message: "",
     });
   };
-
+useEffect(()=>{
+  const getContact =document.getElementById("contact");
+if(isblogpage){
+  getContact.style.display = "none"; 
+}
+else{
+  getContact.style.display = "block"; 
+}
+},[isblogpage])
   return (
    <>
-   {isblogpage && (
+   {!isblogpage && (
 
 
     <div className="contact-page" id="contact">
