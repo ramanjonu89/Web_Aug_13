@@ -163,35 +163,74 @@
 // export default SideBar;
 
 import React, { useEffect, useState, useCallback, useRef, useContext } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import dotImage from "../assets/Ellipse 1444.png";
 import WDLogoSidebar from "../assets/webdaddy-final-logo.png";
 
 // imported context to update the internal blogpage visibility
 import { BlogContext } from "../BlogContext";
+const useIntersectionObserver = (targets, callback) => {
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        callback(entry.target.id, entry.isIntersecting);
+      });
+    }, { threshold: 0.5 }); // Trigger when 50% of the target is visible
 
+    targets.forEach((target) => {
+      const element = document.getElementById(target);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      targets.forEach((target) => {
+        const element = document.getElementById(target);
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
+    };
+  }, [targets, callback]);
+};
 
 const SideBar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrollProgress, setScrollProgress] = useState(0);
   const progressRef = useRef(null);
 
-  const {setIsblogpage} =useContext(BlogContext)  // context is used here 
+  const { setIsblogpage } = useContext(BlogContext)  // context is used here 
+
+
+  const handleIntersection = useCallback((id, isIntersecting) => {
+    if (isIntersecting) {
+      // console.log(`${id} is in the viewport`);
+      setActiveSection(id);
+    } else {
+      // console.log(`${id} is out of the viewport`);
+    }
+  }, []);
+
+  useIntersectionObserver(['about', 'team'], handleIntersection);
+
 
   const handleScroll = useCallback(() => {
     const scrollY = window.scrollY;
     const scrollHeight =
       document.documentElement.scrollHeight - window.innerHeight;
     const progress = (scrollY / scrollHeight) * 100;
+    console.log(scrollHeight);
     setScrollProgress(progress);
-
     const horizontalScroll = document.querySelector(".horizontal_scroll");
+  
     const horizontalRect = horizontalScroll.getBoundingClientRect();
-
+ 
     if (scrollY < horizontalRect.height) {
       // In the horizontal scroll area
       const scrollLeft = horizontalScroll.scrollLeft;
       const sectionWidth = window.innerWidth;
+
       const sectionIndex = Math.round(scrollLeft / sectionWidth);
       const horizontalSections = [
         "home",
@@ -199,7 +238,7 @@ const SideBar = () => {
         "hero3",
         "hero4",
         "about",
-        "team",
+        "team"
       ];
       setActiveSection(horizontalSections[sectionIndex] || "home");
     } else {
@@ -207,6 +246,7 @@ const SideBar = () => {
       const sections = ["services", "portfolio", "blog", "contact"];
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
+        
         if (section && section.offsetTop <= scrollY + 50) {
           setActiveSection(sections[i]);
           break;
@@ -226,7 +266,7 @@ const SideBar = () => {
     };
   }, [handleScroll]);
 
-  
+
   useEffect(() => {
     if (progressRef.current) {
       progressRef.current.style.height = `${scrollProgress}%`;
@@ -236,38 +276,75 @@ const SideBar = () => {
 
 
   const handleNavigation = useCallback((sectionId) => {
-
+    setActiveSection(sectionId);
     setIsblogpage(false);  //state  value is set  to false tohide internal blog page
 
-    const horizontalSections = ["home", "hero2", "hero3", "hero4", "about", "team"];
+    const horizontalSections = ["home", "hero2", "hero3", "hero4", "about","team"];
     const section = document.getElementById(sectionId);
     if (!section) {
       console.warn(`Section with ID "${sectionId}" not found.`);
       return;
     }
+    // if (horizontalSections.includes(sectionId) ) {
+    //   window.scrollTo({ top: 0, behavior: "smooth" });
+    //   const observer = new IntersectionObserver(entries => {
+    //     console.log(entries[0].isIntersecting);
+    //     if (entries[0].isIntersecting) {
+    //       section.scrollIntoView({ behavior: 'smooth' });
+    //       observer.disconnect(); 
+
+    //       if(sectionId === 'team'){
+    //         window.scrollBy({ top: 4000, behavior: "smooth" });
+    //         setTimeout(() => {
+    //           window.scrollBy({ top: 100, behavior: 'smooth' });
+    //         }, 500);
+    //       }
+         
+    //     }
+    //   }, { threshold: 1.0 }); // Adjust threshold if needed
+    //   observer.observe(document.body);
+    
+
+    // }
+    
     if (horizontalSections.includes(sectionId)) {
-      // Scroll to the top first to ensure the horizontal section is in view
       window.scrollTo({ top: 0, behavior: "smooth" });
+      
       const observer = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
+        const entry = entries[0];
+        console.log(entry.isIntersecting);
+    
+        if (entry.isIntersecting) {
+          // Smoothly scroll the section into view
           section.scrollIntoView({ behavior: 'smooth' });
-          observer.disconnect(); // Stop observing after the horizontal scroll is triggered
+          observer.disconnect(); 
+    
+          // Special handling for the 'team' section
+          if (sectionId === 'team') {
+            window.scrollBy({ top: 4000, behavior: 'smooth' });
+          } else {
+            // Add any additional handling for other sections if needed
+          }
         }
       }, { threshold: 1.0 }); // Adjust threshold if needed
+    
       observer.observe(document.body);
     }
+    
     else {
-      // Handle vertical sections
-      const yOffset = -50; // Adjust this offset based on your header size
+      
+    
+      const yOffset = -50; 
       const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      console.log( y,"except team");
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   }, []);
-  
 
 
-  
-  
+
+
+
 
   return (
     <nav className="sidebar" aria-label="Sidebar Navigation">
